@@ -11,7 +11,14 @@
 |
 */
 
+
+
+// posts
+
+Route::resource('posts', 'PostController');
+
 // pages
+
 Route::get('contact', 'PagesController@getContact');
 
 Route::get('about', 'PagesController@getAbout');

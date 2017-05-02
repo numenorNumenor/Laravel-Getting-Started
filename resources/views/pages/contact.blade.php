@@ -6,9 +6,9 @@
 
   <div class="row">
     <div class="col-md-12">
-      <h1>Contac me</h1>
+      <h1>Contact me</h1>
 
-      {{ Form::open([ 'url' => 'pages.contact']) }}
+      {!! Form::open([ 'url' => 'pages.contact']) !!}
         <div class="form-group">
           {{ Form::label('email', 'Email :') }}
           {{ Form::text('email', null, array('class' => 'form-control')) }}
@@ -18,9 +18,9 @@
           {{ Form::textarea('message', null, array('class' => 'form-control')) }}
         </div>
         <div class="form-group">
-          {{ Form::submit('Create', array('class' => 'btn btn-sm btn-success')) }}
+          {{ Form::submit('Send', array('class' => 'btn btn-sm btn-success')) }}
         </div>
-      {{ Form::close() }}
+      {!! Form::close() !!}
     </div>
   </div>
 
