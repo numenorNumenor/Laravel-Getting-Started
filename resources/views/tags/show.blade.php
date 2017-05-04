@@ -16,9 +16,11 @@
 
       <div class="btn-group">
 
-        <a  class="btn btn-sm btn-primary" href="{{ route('tags.index') }}">back to tags</a>
-
         <a class="btn btn-sm btn-success" href="{{ route('tags.edit', $tag->id) }}">Edit</a>
+
+      </div>
+
+      <div class="btn-group">
 
         {{ Form::open([ 'route' => ['tags.destroy', $tag->id], 'method' => 'DELETE']) }}
 
@@ -58,12 +60,13 @@
               </td>
 
               <td>
-                <a class="btn btn-default btn-xs" href="{{ route('tags.show', $tag->id) }}">View</a>
+                <a class="btn btn-default btn-xs" href="{{ route('posts.show', $post->id) }}">View</a>
               </td>
             </tr>
           @endforeach
         </tbody>
       </table>
+      <a class="btn btn-primary btn-sm" href="{{ route('tags.index') }}">Back</a>
     </div>
   </div>
 
