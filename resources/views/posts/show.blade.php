@@ -7,6 +7,12 @@
   <div class="row">
     <div class="col-md-12">
 
+        <div class="tags">
+          @foreach ($post->tags as $tag)
+            <span class="label label-default">{{ $tag->name }}</span>
+          @endforeach
+        </div>
+
         <h1>{{ $post->title }}</h1>
 
         <p class="lead">{{ $post->body }}</p>
@@ -14,7 +20,7 @@
         <div class="btn-group">
           <a class="btn btn-primary btn-sm" href="{{ route('posts.edit', $post->id) }}">Edit</a>
         </div>
-        
+
         <div class="btn-group">
           {!! Form::open(['route' => ['posts.destroy', $post->id], 'method' => 'DELETE' ]) !!}
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Tag;
 use Session;
 
 class PostController extends Controller
@@ -11,9 +12,9 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+      $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -21,9 +22,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'desc')->paginate(5);
+      $posts = Post::orderBy('id', 'desc')->paginate(5);
 
-        return view('posts.index')->withPosts($posts);
+      return view('posts.index')->withPosts($posts);
     }
 
     /**
@@ -33,7 +34,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+      $tags = Tag::pluck('name','id');
+
+      return view('posts.create')->withTags($tags);
     }
 
     /**
@@ -56,6 +59,8 @@ class PostController extends Controller
 
         $post->save();
 
+        $post->tags()->sync($request->tags, false);
+
         Session::flash('success', 'Post was successfully created !');
 
         return redirect()->route('posts.show', $post->id);
@@ -69,9 +74,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
+      $post = Post::find($id);
 
-        return view('posts.show')->withPost($post);
+      return view('posts.show')->withPost($post);
     }
 
     /**
@@ -82,9 +87,11 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::find($id);
+      $post = Post::find($id);
 
-        return view('posts.edit')->withPost($post);
+      $tags = Tag::pluck('name','id');
+
+      return view('posts.edit')->withPost($post)->withTags($tags);
     }
 
     /**
@@ -108,6 +115,13 @@ class PostController extends Controller
 
       $post->save();
 
+      if (isset($request->tags)) {
+        $post->tags()->sync($request->tags);
+      }
+      else {
+        $post->tags()->sync(array());
+      }
+
       Session::flash('success', 'Post was successfully updated !');
 
       return redirect()->route('posts.show', $post->id);
@@ -121,12 +135,14 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::find($id);
+      $post = Post::find($id);
+      
+      $post->tags()->detach();
 
-        $post->delete();
+      $post->delete();
 
-        Session::flash('success', 'Post was successfully deleted !');
+      Session::flash('success', 'You did it ! Post was deleted !');
 
-        return redirect()->route('posts.index');
+      return redirect()->route('posts.index');
     }
 }

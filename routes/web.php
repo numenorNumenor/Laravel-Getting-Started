@@ -11,7 +11,9 @@
 |
 */
 
+//tags
 
+Route::resource('tags', 'TagController', ['except' => ['create']]);
 
 // posts
 

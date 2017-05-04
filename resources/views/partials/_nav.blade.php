@@ -37,6 +37,7 @@
                 <ul class="dropdown-menu" role="menu">
                     <li class="{{ Request::is("posts/create") ? "active" : "" }}"><a href="/posts/create">Create Post</a></li>
                     <li class="{{ Request::is("posts") ? "active" : "" }}"><a href="/posts">Posts</a></li>
+                    <li class="{{ Request::is("tags") ? "active" : "" }}"><a href="/tags">Tags</a></li>
                     <li>
                         <a href="{{ route('logout') }}"
                             onclick="event.preventDefault();
